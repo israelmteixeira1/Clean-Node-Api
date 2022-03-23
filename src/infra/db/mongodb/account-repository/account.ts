@@ -12,10 +12,11 @@ export class AccountMongoRepository implements AddAccountRepository {
     const { _id, ...accountWithoutId } = accountCreated
 
     const accountCreatedBody = {
+      _id: _id,
       email: accountWithoutId.email,
       name: accountWithoutId.name,
       password: accountWithoutId.password
     }
-    return Object.assign({}, accountCreatedBody, { id: _id })
+    return MongoHelper.map(accountCreatedBody)
   }
 }
