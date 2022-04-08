@@ -166,7 +166,7 @@ describe('SignUp Controller', () => {
     }
     const httResponse = await sut.handle(httpRequest)
     expect(httResponse.statusCode).toBe(500)
-    expect(httResponse.body).toEqual(new ServerError())
+    expect(httResponse.body).toEqual(new ServerError('stack'))
   })
 
   test('Should call AddAccount with correct values', async () => {
@@ -206,7 +206,7 @@ describe('SignUp Controller', () => {
     }
     const httResponse = await sut.handle(httpRequest)
     expect(httResponse.statusCode).toBe(500)
-    expect(httResponse.body).toEqual(new ServerError())
+    expect(httResponse.body).toEqual(new ServerError('stack'))
   })
 
   test('Should return 200 if valid data is provided', async () => {
