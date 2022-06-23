@@ -19,5 +19,4 @@ export class BcryptAdapter implements Hasher, HashComparer {
     const hash = await bcrypt.hash(value, this.salt)
     return hash
   }
-
 }
