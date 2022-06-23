@@ -1,12 +1,12 @@
-import { DbAuthentication } from "@/data/usecase/authentication/db-authentication";
-import { BcryptAdapter } from "@/infra/criptography/bcrypt-adapter/bcrypt-adapter";
-import { JwtAdapter } from "@/infra/criptography/jwt-adapter/jwt-adapter";
-import { AccountMongoRepository } from "@/infra/db/mongodb/account/account-repository";
-import { LogMongoRepository } from "@/infra/db/mongodb/log/log-mongo-repository";
-import env from "@/main/config/env";
-import { LogControllerDecorator } from "@/main/decorators/log-controller-decorator";
-import { LoginController } from "@/presentation/controllers/login/login-controller";
-import { Controller } from "@/presentation/protocols";
+import { DbAuthentication } from "../../../data/usecase/authentication/db-authentication";
+import { BcryptAdapter } from "../../../infra/criptography/bcrypt-adapter/bcrypt-adapter";
+import { JwtAdapter } from "../../../infra/criptography/jwt-adapter/jwt-adapter";
+import { AccountMongoRepository } from "../../../infra/db/mongodb/account/account-repository";
+import { LogMongoRepository } from "../../../infra/db/mongodb/log/log-mongo-repository";
+import env from "../../../main/config/env";
+import { LogControllerDecorator } from "../../../main/decorators/log-controller-decorator";
+import { LoginController } from "../../../presentation/controllers/login/login-controller";
+import { Controller } from "../../../presentation/protocols";
 import { makeLoginValidation } from "./login-validation-factory";
 
 export const makeLoginController = (): Controller => {
