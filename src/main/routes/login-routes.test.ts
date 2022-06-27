@@ -60,7 +60,7 @@ describe('Login Routes', () => {
           email: 'israel@accon.com.br',
           password: '123'
         })
-        .expect(200)
+        .expect(401)
     })
   })
 })
