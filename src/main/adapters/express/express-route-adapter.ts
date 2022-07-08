@@ -1,4 +1,4 @@
-import { Controller } from "@/presentation/protocols";
+import { Controller } from "../../../presentation/protocols";
 
 export const adaptRoute = (controller: Controller) => {
   return async (req, res) => {
