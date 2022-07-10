@@ -3,7 +3,10 @@
   "version": "1.1.0",
   "description": "",
   "main": "index.js",
-  "scripts": { 
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc",
     "dev": "sucrase-node src/main/server.ts",
@@ -22,7 +25,7 @@
     "bcrypt": "^5.0.1",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.1.1",
+    "mongodb": "4.3.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {
@@ -31,7 +34,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/mongodb": "^4.0.7",
-    "@types/node": "^17.0.21",
+    "@types/node": "^16.x",
     "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
