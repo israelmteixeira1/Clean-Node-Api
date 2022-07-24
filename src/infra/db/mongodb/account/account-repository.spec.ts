@@ -6,7 +6,7 @@ describe('Account Mongo Repository', () => {
   let accountCollection: Collection
 
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
+    await MongoHelper.connect(process.env.MONGO_URL!)
   })
 
   afterAll(async () => {
@@ -69,11 +69,12 @@ describe('Account Mongo Repository', () => {
     })
 
     const createdAccount = await accountCollection.findOne({email: 'any_email@mail.com'})
-    expect(createdAccount.accessToken).toBeFalsy()
+    expect(createdAccount!.accessToken).toBeFalsy()
 
-    await sut.updateAccessToken(createdAccount._id, 'any_token')
+    await sut.updateAccessToken(createdAccount!._id.toString(), 'any_token')
     const account = await accountCollection.findOne({email: 'any_email@mail.com'})
     expect(account).toBeTruthy()
-    expect(account.accessToken).toBe('any_token')
+    console.log(account)
+    expect(account!.accessToken).toBe('any_token')
   })
 })
