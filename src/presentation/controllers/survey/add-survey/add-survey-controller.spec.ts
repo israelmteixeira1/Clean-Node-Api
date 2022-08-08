@@ -1,11 +1,11 @@
-import { HttpRequest, HttpResponse, Validation } from "./add-survey-controller-protocols";
+import { HttpRequest, Validation, AddSurvey, AddSurveyModel } from "./add-survey-controller-protocols";
 import { AddSurveyController } from './add-survey-controller'
 import { badRequest } from '../../../helpers/http/http-helper'
 
 describe('AddSurvey Controller', () => {
     const makeFakeRequest = (): HttpRequest => ({
         body: {
-            questiion: 'any_question',
+            question: 'any_question',
             answers: [{
                 image: 'any_image',
                 answer: 'any_answer'
@@ -22,17 +22,29 @@ describe('AddSurvey Controller', () => {
         return new ValidationStub()
     }
 
+    const makeAddSurvey = (): AddSurvey => {
+        class AddSurveyStub implements AddSurvey {
+            add(data: AddSurveyModel): Promise<void> {
+                return new Promise(resolve => resolve())
+            }
+        }
+        return new AddSurveyStub()
+    }
+
     interface SutTypes {
         sut: AddSurveyController,
-        validationStub: Validation
+        validationStub: Validation,
+        addSurveyStub: AddSurvey
     }
 
     const makeSut = (): SutTypes => {
         const validationStub = makeValidationStub()
-        const sut = new AddSurveyController(validationStub)
+        const addSurveyStub = makeAddSurvey()
+        const sut = new AddSurveyController(validationStub, addSurveyStub)
         return {
             sut,
-            validationStub
+            validationStub,
+            addSurveyStub
         }
     }
 
@@ -49,5 +61,13 @@ describe('AddSurvey Controller', () => {
         jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
         const htttpResponse = await sut.handle(makeFakeRequest())
         expect(htttpResponse).toEqual(badRequest(new Error()))
+    })
+
+    test('Should call addSurvey with correct values', async () => {
+        const { sut, addSurveyStub } = makeSut()
+        const httpRequest = makeFakeRequest()
+        const addSpy = jest.spyOn(addSurveyStub, 'add')
+        await sut.handle(httpRequest)
+        expect(addSpy).toHaveBeenCalledWith(httpRequest.body)
     })
 })
