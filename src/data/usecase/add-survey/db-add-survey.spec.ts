@@ -18,11 +18,24 @@ const makeAddSurveyRepositoryStub = (): AddSurveyRepository => {
     return new AddSurveyRepositoryStub()
 }
 
+interface SutTypes {
+    sut: DbAddSurvey
+    addSurveyRepository: AddSurveyRepository
+}
+
+const makeSut = (): SutTypes => {
+    const addSurveyRepository = makeAddSurveyRepositoryStub()
+    const sut = new DbAddSurvey(addSurveyRepository)
+    return {
+        sut,
+        addSurveyRepository
+    }
+}
+
 describe('DbAddSurvey Usecase', () => {
     test('Should call AddSurveyRepository with correct values', async () => {
-        const addSurveyRepositoryStub = makeAddSurveyRepositoryStub()
-        const sut = new DbAddSurvey(addSurveyRepositoryStub)
-        const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
+        const { addSurveyRepository, sut } = makeSut()
+        const addSpy = jest.spyOn(addSurveyRepository, 'add')
         const surveyData = makeFakeSurveyData()
         await sut.add(surveyData)
         expect(addSpy).toHaveBeenCalledWith(surveyData)
