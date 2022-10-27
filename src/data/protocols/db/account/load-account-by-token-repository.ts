@@ -2,5 +2,5 @@ import { AccountModel } from "../../../usecase/add-account/db-add-account-protoc
 
 
 export interface LoadAccountByTokenRepository{
-    loadByToken (account: string, role?: string): Promise<AccountModel>
+    loadByToken (account: string, role?: string): Promise<AccountModel| null>
 }
