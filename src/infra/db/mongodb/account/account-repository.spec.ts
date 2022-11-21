@@ -60,21 +60,37 @@ describe('Account Mongo Repository', () => {
     expect(account).toBeFalsy()
   })
 
-  test('Should update the account accessToken on updateAccessToken success', async () => {
+  // test('Should update the account accessToken on updateAccessToken success', async () => {
+  //   const sut = makeSut()
+  //   await accountCollection.insertOne({
+  //     name: 'any_name',
+  //     email: 'any_email@mail.com',
+  //     password: 'any_passwoard'
+  //   })
+
+  //   const createdAccount = await accountCollection.findOne({email: 'any_email@mail.com'})
+  //   expect(createdAccount!.accessToken).toBeFalsy()
+
+  //   await sut.updateAccessToken(createdAccount!._id.toString(), 'any_token')
+  //   const account = await accountCollection.findOne({email: 'any_email@mail.com'})
+  //   expect(account).toBeTruthy()
+  //   expect(account!.accessToken).toBe('any_token')
+  // })
+
+  test('Should return an account on loadByToken without role', async () => {
     const sut = makeSut()
     await accountCollection.insertOne({
       name: 'any_name',
       email: 'any_email@mail.com',
-      password: 'any_passwoard'
+      password: 'any_passwoard',
+      accessToken: 'any_token'
     })
 
-    const createdAccount = await accountCollection.findOne({email: 'any_email@mail.com'})
-    expect(createdAccount!.accessToken).toBeFalsy()
-
-    await sut.updateAccessToken(createdAccount!._id.toString(), 'any_token')
-    const account = await accountCollection.findOne({email: 'any_email@mail.com'})
+    const account = await sut.loadByToken('any_token')
     expect(account).toBeTruthy()
-    console.log(account)
-    expect(account!.accessToken).toBe('any_token')
+    expect(account!.id).toBeTruthy()
+    expect(account!.name).toBe('any_name')
+    expect(account!.email).toBe('any_email@mail.com')
+    expect(account!.password).toBe('any_passwoard')
   })
 })
